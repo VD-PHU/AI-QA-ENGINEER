@@ -1,0 +1,102 @@
+{
+  "target": "file://D:\\DuAnNho\\ai-qa-engineer\\ai-qa-engineer\\app\\register.html",
+  "forms": [
+    {
+      "id": "registerForm",
+      "fieldCount": 3
+    }
+  ],
+  "elementsFound": 4,
+  "report": [
+    {
+      "element": {
+        "tag": "input",
+        "type": "text",
+        "buttonType": null,
+        "id": "email",
+        "name": "email",
+        "required": false,
+        "minlength": null,
+        "maxlength": null,
+        "pattern": null,
+        "placeholder": null,
+        "testid": "email-input",
+        "label": "Email address",
+        "email": false
+      },
+      "suggestedTests": [
+        "Positive: valid email formats (standard, plus-addressing, subdomains)",
+        "Negative: malformed email (missing @, missing TLD, spaces)",
+        "Boundary: very long email (e.g. 254 chars, RFC max) and one char over",
+        "Validation: duplicate/already-registered value should be rejected server-side"
+      ]
+    },
+    {
+      "element": {
+        "tag": "input",
+        "type": "password",
+        "buttonType": null,
+        "id": "password",
+        "name": "password",
+        "required": false,
+        "minlength": null,
+        "maxlength": null,
+        "pattern": null,
+        "placeholder": null,
+        "testid": "password-input",
+        "label": "Password",
+        "email": false
+      },
+      "suggestedTests": [
+        "Boundary: shortest and longest accepted password length (check both ends)",
+        "Negative: missing each required character class (upper/lower/digit/special) one at a time",
+        "Validation: input is masked (type=password), not echoed in plaintext anywhere (DOM, network, logs)",
+        "Validation: paired confirm-field mismatch is rejected"
+      ]
+    },
+    {
+      "element": {
+        "tag": "input",
+        "type": "password",
+        "buttonType": null,
+        "id": "confirmPassword",
+        "name": "confirmPassword",
+        "required": false,
+        "minlength": null,
+        "maxlength": null,
+        "pattern": null,
+        "placeholder": null,
+        "testid": "confirm-password-input",
+        "label": "Confirm password",
+        "email": false
+      },
+      "suggestedTests": [
+        "Boundary: shortest and longest accepted password length (check both ends)",
+        "Negative: missing each required character class (upper/lower/digit/special) one at a time",
+        "Validation: input is masked (type=password), not echoed in plaintext anywhere (DOM, network, logs)",
+        "Validation: paired confirm-field mismatch is rejected"
+      ]
+    },
+    {
+      "element": {
+        "tag": "button",
+        "type": "submit",
+        "buttonType": "submit",
+        "id": "submitBtn",
+        "name": null,
+        "required": false,
+        "minlength": null,
+        "maxlength": null,
+        "pattern": null,
+        "placeholder": null,
+        "testid": "submit-button",
+        "label": null,
+        "email": false
+      },
+      "suggestedTests": [
+        "Validation: button becomes disabled / shows a loading state immediately after first click (no double-submit)",
+        "Negative: rapid double-click does not create two records / two success messages"
+      ]
+    }
+  ]
+}

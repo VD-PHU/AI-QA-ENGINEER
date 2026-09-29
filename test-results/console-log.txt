@@ -1,0 +1,29 @@
+Running 21 automated test cases against file:///home/claude/qa-project/app/register.html
+
+[TC-01] ✅ PASS — Register with valid email + strong password
+[TC-02] ✅ PASS — Register with plus-addressed / subdomain email
+[TC-03] ✅ PASS — Register with password at max valid length (64 chars, complex)
+[TC-04] ✅ PASS — Empty email
+[TC-05] ✅ PASS — Empty password
+[TC-06] ✅ PASS — Confirm password does not match
+[TC-07] ✅ PASS — Malformed email (missing @)
+[TC-08] ✅ PASS — Malformed email (missing domain suffix)
+[TC-09] ❌ FAIL — Register with an already-registered email
+    expected: Form-level error "An account with this email already exists.", registration blocked
+    actual  : Registration succeeded (success message shown) — duplicate email was NOT rejected.
+[TC-10] ✅ PASS — Password missing special character
+[TC-11] ✅ PASS — Password missing uppercase letter
+[TC-12] ✅ PASS — Password missing digit
+[TC-13] ❌ FAIL — Password exactly at minimum length (8 chars)
+    expected: Accepted — success message shown
+    actual  : Registration rejected. Inline error shown: "Password must be at least 8 characters long."
+[TC-14] ✅ PASS — Password one below minimum (7 chars)
+[TC-15] ✅ PASS — Password exactly at maximum length (64 chars)
+[TC-16] ✅ PASS — Password one above maximum (65 chars)
+[TC-17] ✅ PASS — Email at max allowed length (254 chars)
+[TC-18] ✅ PASS — Email whitespace is trimmed
+[TC-19] ✅ PASS — Password field masks input
+[TC-20] ✅ PASS — Submit button disabled during submission (no double-submit)
+[TC-21] ✅ PASS — Successful registration resets the form
+
+=== SUMMARY: 19/21 passed, 2 failed ===

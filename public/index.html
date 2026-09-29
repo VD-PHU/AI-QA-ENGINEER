@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI QA Engineer</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;color:#222}
+main{max-width:980px;margin:0 auto;padding:24px}
+h1{font-size:22px}h2{font-size:17px;margin-top:0}
+.card{background:#fff;border-radius:8px;padding:18px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+textarea{width:100%;box-sizing:border-box;padding:8px;font-size:14px;border:1px solid #ccc;border-radius:4px}
+button{background:#2563eb;color:#fff;border:0;padding:9px 16px;border-radius:4px;font-size:14px;cursor:pointer;margin-top:8px}
+button:disabled{background:#93b4f7}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid #eee;padding:6px;text-align:left;vertical-align:top}
+.tag{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:bold;color:#fff}
+.POS{background:#137333}.NEG{background:#b3261e}.BND{background:#b26a00}.VAL{background:#5b3fb5}
+.pass{color:#137333;font-weight:bold}.fail{color:#d93025;font-weight:bold}
+.note{font-size:12px;color:#666}
+.bug{border-left:4px solid #d93025;padding:8px 14px;margin:10px 0;background:#fff8f7}
+.bug img{max-width:100%;border:1px solid #ddd;margin-top:6px}
+pre{background:#111;color:#ddd;padding:10px;border-radius:4px;overflow:auto;font-size:12px;max-height:240px}
+</style></head><body><main>
+<h1>AI QA Engineer: Requirement → Test Cases → Execute → Analyze → Bug Report</h1>
+
+<div class="card"><h2>1. Requirement</h2>
+<textarea id="req" rows="2">As a user, I can register using email and password.</textarea>
+<button id="gen">Sinh test case</button>
+<p class="note">Luu y: phien ban nay dung bo 21 test case da soan san cho requirement dang ky (chua goi AI thuc khi bam nut). Xem muc Limitations trong README.</p></div>
+
+<div class="card"><h2>2. Test cases <span id="tcCount" class="note"></span></h2><div id="tcBox" class="note">Bam "Sinh test case" de xem.</div></div>
+
+<div class="card"><h2>3. Chay test (Playwright)</h2>
+<button id="run">Chay test</button> <span id="status" class="note"></span>
+<div id="summary" style="margin-top:10px"></div><div id="resBox"></div>
+<details><summary class="note">Xem log console</summary><pre id="log"></pre></details></div>
+
+<div class="card"><h2>4. Bug report (tu dong tao tu cac test FAIL)</h2><div id="bugBox" class="note">Chua co ket qua.</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+$("gen").onclick=async()=>{
+  const t=await (await fetch("/api/testcases")).json();
+  const n={};t.forEach(x=>n[x.category]=(n[x.category]||0)+1);
+  $("tcCount").textContent=`(${t.length} case: `+Object.entries(n).map(([k,v])=>k+" "+v).join(", ")+")";
+  $("tcBox").innerHTML="<table><tr><th>ID</th><th>Nhom</th><th>Ten</th><th>Ket qua mong doi</th></tr>"+
+   t.map(x=>`<tr><td>${esc(x.id)}</td><td><span class="tag ${esc(x.category)}">${esc(x.category)}</span></td><td>${esc(x.title)}</td><td>${esc(x.expected)}</td></tr>`).join("")+"</table>";
+};
+function render(d){
+  $("summary").innerHTML=`<b>${d.pass}/${d.total} PASS</b>, <span class="${d.fail?"fail":"pass"}">${d.fail} FAIL</span>`;
+  $("resBox").innerHTML="<table>"+d.results.map(r=>`<tr><td>${esc(r.id)}</td><td>${esc(r.title)}</td><td class="${r.status==="PASS"?"pass":"fail"}">${r.status}</td></tr>`).join("")+"</table>";
+  $("log").textContent=d.log||"(chua chay lan nao trong phien nay)";
+  $("bugBox").innerHTML=d.bugs.length?d.bugs.map(b=>`<div class="bug"><b>${esc(b.bugId)}: ${esc(b.testCase)}</b>
+   <p><b>Expected:</b> ${esc(b.expected)}<br><b>Actual:</b> ${esc(b.actual)}<br><b>Severity goi y:</b> ${esc(b.severity)}<br><b>Possible cause:</b> ${esc(b.possibleCause)}</p>
+   ${b.evidence?`<b>Evidence:</b><br><img src="${esc(b.evidence)}?t=${Date.now()}">`:""}</div>`).join(""):"Khong co test FAIL, khong can bug report.";
+}
+$("run").onclick=async()=>{
+  $("run").disabled=true;$("status").textContent="Dang chay 21 test (khoang vai chuc giay)...";
+  try{const d=await (await fetch("/api/run",{method:"POST"})).json();
+    if(d.error){$("status").textContent="Loi: "+d.error;$("log").textContent=d.log||"";}
+    else{render(d);$("status").textContent="Xong.";}}
+  catch(e){$("status").textContent="Loi: "+e;}
+  $("run").disabled=false;
+};
+fetch("/api/last").then(r=>r.json()).then(d=>{if(d)render(d)});
+</script></main></body></html>

@@ -1,0 +1,197 @@
+{
+  "total": 21,
+  "pass": 20,
+  "fail": 1,
+  "results": [
+    {
+      "id": "TC-01",
+      "category": "POS",
+      "title": "Register with valid email + strong password",
+      "expected": "Success message shown, form cleared",
+      "status": "PASS",
+      "actual": "success message shown; form cleared",
+      "screenshot": null
+    },
+    {
+      "id": "TC-02",
+      "category": "POS",
+      "title": "Register with plus-addressed / subdomain email",
+      "expected": "Success message shown",
+      "status": "PASS",
+      "actual": "success message shown",
+      "screenshot": null
+    },
+    {
+      "id": "TC-03",
+      "category": "POS",
+      "title": "Register with password at max valid length (64 chars, complex)",
+      "expected": "Success message shown",
+      "status": "PASS",
+      "actual": "success message shown",
+      "screenshot": null
+    },
+    {
+      "id": "TC-04",
+      "category": "NEG",
+      "title": "Empty email",
+      "expected": "Inline error \"Email is required.\", no success message",
+      "status": "PASS",
+      "actual": "email error shown: \"Email is required.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-05",
+      "category": "NEG",
+      "title": "Empty password",
+      "expected": "Inline error \"Password is required.\", no success message",
+      "status": "PASS",
+      "actual": "password error shown: \"Password is required.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-06",
+      "category": "NEG",
+      "title": "Confirm password does not match",
+      "expected": "Inline error \"Passwords do not match.\", no success message",
+      "status": "PASS",
+      "actual": "confirm error shown: \"Passwords do not match.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-07",
+      "category": "NEG",
+      "title": "Malformed email (missing @)",
+      "expected": "Inline error \"Please enter a valid email address.\"",
+      "status": "PASS",
+      "actual": "email error shown: \"Please enter a valid email address.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-08",
+      "category": "NEG",
+      "title": "Malformed email (missing domain suffix)",
+      "expected": "Inline error \"Please enter a valid email address.\"",
+      "status": "PASS",
+      "actual": "email error shown: \"Please enter a valid email address.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-09",
+      "category": "NEG",
+      "title": "Register with an already-registered email",
+      "expected": "Form-level error \"An account with this email already exists.\", registration blocked",
+      "status": "FAIL",
+      "actual": "Registration succeeded (success message shown) — duplicate email was NOT rejected.",
+      "error": "Expected duplicate-email to be rejected with form-error, but registration succeeded instead.",
+      "screenshot": "test-results\\screenshots\\TC-09.png"
+    },
+    {
+      "id": "TC-10",
+      "category": "NEG",
+      "title": "Password missing special character",
+      "expected": "Inline error \"...at least one special character.\"",
+      "status": "PASS",
+      "actual": "password error shown: \"Password must contain at least one special character.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-11",
+      "category": "NEG",
+      "title": "Password missing uppercase letter",
+      "expected": "Inline error \"...at least one uppercase letter.\"",
+      "status": "PASS",
+      "actual": "password error shown: \"Password must contain at least one uppercase letter.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-12",
+      "category": "NEG",
+      "title": "Password missing digit",
+      "expected": "Inline error \"...at least one digit.\"",
+      "status": "PASS",
+      "actual": "password error shown: \"Password must contain at least one digit.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-13",
+      "category": "BND",
+      "title": "Password exactly at minimum length (8 chars)",
+      "expected": "Accepted — success message shown",
+      "status": "PASS",
+      "actual": "8-char password accepted",
+      "screenshot": null
+    },
+    {
+      "id": "TC-14",
+      "category": "BND",
+      "title": "Password one below minimum (7 chars)",
+      "expected": "Rejected — \"at least 8 characters\" error",
+      "status": "PASS",
+      "actual": "7-char password correctly rejected: \"Password must be at least 8 characters long.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-15",
+      "category": "BND",
+      "title": "Password exactly at maximum length (64 chars)",
+      "expected": "Accepted — success message shown",
+      "status": "PASS",
+      "actual": "64-char password accepted",
+      "screenshot": null
+    },
+    {
+      "id": "TC-16",
+      "category": "BND",
+      "title": "Password one above maximum (65 chars)",
+      "expected": "Rejected — \"at most 64 characters\" error",
+      "status": "PASS",
+      "actual": "65-char password correctly rejected: \"Password must be at most 64 characters long.\"",
+      "screenshot": null
+    },
+    {
+      "id": "TC-17",
+      "category": "BND",
+      "title": "Email at max allowed length (254 chars)",
+      "expected": "Accepted — success message shown",
+      "status": "PASS",
+      "actual": "254-char email accepted",
+      "screenshot": null
+    },
+    {
+      "id": "TC-18",
+      "category": "VAL",
+      "title": "Email whitespace is trimmed",
+      "expected": "Treated as trimmed email; accepted",
+      "status": "PASS",
+      "actual": "whitespace-padded email accepted",
+      "screenshot": null
+    },
+    {
+      "id": "TC-19",
+      "category": "VAL",
+      "title": "Password field masks input",
+      "expected": "type=\"password\" attribute present on password & confirm fields",
+      "status": "PASS",
+      "actual": "both fields correctly masked",
+      "screenshot": null
+    },
+    {
+      "id": "TC-20",
+      "category": "VAL",
+      "title": "Submit button disabled during submission (no double-submit)",
+      "expected": "Button becomes disabled (\"Creating account...\") until request completes",
+      "status": "PASS",
+      "actual": "submit button correctly disabled during processing",
+      "screenshot": null
+    },
+    {
+      "id": "TC-21",
+      "category": "VAL",
+      "title": "Successful registration resets the form",
+      "expected": "Email/password/confirm fields are empty after success",
+      "status": "PASS",
+      "actual": "form fields cleared after success",
+      "screenshot": null
+    }
+  ]
+}
